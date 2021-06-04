@@ -1,0 +1,47 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: free5gc-webui-gateway
+  namespace: free5gc
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https-free5gc
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: monitoring-gw-cert
+    hosts:
+    - "free5gc.externo.kub"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: free5gc-webui-vs
+  namespace: free5gc
+spec:
+  hosts:
+  - "free5gc.externo.kub"
+  gateways:
+  - free5gc-webui-gateway
+  http:
+  - route:
+    - destination:
+        host: free5gc-webui
+        port:
+          number: 5000
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: free5gc-webui
+  namespace: free5gc
+spec:
+  host: free5gc-webui
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---

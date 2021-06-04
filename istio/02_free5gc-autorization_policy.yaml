@@ -1,0 +1,198 @@
+---
+# negar por padrão todas as outras regras sem autorização explícita
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-nothing
+  namespace: free5gc
+spec:
+  action: ALLOW
+---
+#
+# DB - Todos dentro do namespace free5gc tem acesso
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: db-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-db
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# AMF - Todos dentro do namespace free5gc exceto UPF
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: amf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-amf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals: ["n3iwf"]
+        - source:
+            notPrincipals: ["upf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# AUSF - Todos dentro do namespace free5gc exceto upf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: ausf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-ausf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            notPrincipals: ["upf/neiwf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# NRF - Todos dentro do namespace free5gc tem acesso
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: nrf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-nrf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# NSSF - Todos dentro do namespace free5gc exceto upf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: nssf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-nssf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            notPrincipals: ["upf/neiwf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# PCF - Todos dentro do namespace free5gc exceto upf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: pcf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-pcf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            notPrincipals: ["upf/neiwf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# SMF - Todos dentro do namespace free5gc exceto n3iwf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: smf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-smf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            notPrincipals: ["neiwf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# UDM - Todos dentro do namespace free5gc exceto upf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: udm-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-udm
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            notPrincipals: ["upf/neiwf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# UDR - Todos dentro do namespace free5gc exceto upf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: udr-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-udr
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            notPrincipals: ["upf/neiwf"]
+        - source:
+            namespaces: ["free5gc"]
+---
+#
+# UPF - Autorizado para smf e n3iwf
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: upf-ap
+  namespace: free5gc
+spec:
+  selector:
+    matchLabels:
+      app: free5gc-upf
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals: ["smf/n3iwf"]
+        - source:
+            namespaces: ["free5gc"]
+---

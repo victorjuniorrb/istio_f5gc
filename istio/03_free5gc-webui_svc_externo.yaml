@@ -13,7 +13,7 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: monitoring-gw-cert
+      credentialName: free5gc-gw-cert
     hosts:
     - "free5gc.externo.kub"
 ---

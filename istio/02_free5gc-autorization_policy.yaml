@@ -9,7 +9,8 @@ spec:
   action: ALLOW
 ---
 #
-# DB - Todos dentro do namespace free5gc tem acesso
+# DB - MongoDB
+# Todos dentro do namespace free5gc tem acesso
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -26,7 +27,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# AMF - Todos dentro do namespace free5gc exceto UPF
+# AMF - Access and Mobility Management Function
+# Todos dentro do namespace free5gc exceto UPF
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -47,7 +49,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# AUSF - Todos dentro do namespace free5gc exceto upf
+# AUSF - Authentication Server Function
+# Todos dentro do namespace free5gc exceto upf/neiwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -66,7 +69,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# NRF - Todos dentro do namespace free5gc tem acesso
+# NRF - Network Repository Function 
+# Todos dentro do namespace free5gc tem acesso
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -83,7 +87,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# NSSF - Todos dentro do namespace free5gc exceto upf
+# NSSF - Authentication Server Function
+# Todos dentro do namespace free5gc exceto upf/neiwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -102,7 +107,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# PCF - Todos dentro do namespace free5gc exceto upf
+# PCF - Policy Control Function
+# Todos dentro do namespace free5gc exceto upf/neiwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -121,7 +127,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# SMF - Todos dentro do namespace free5gc exceto n3iwf
+# SMF - Session Management Function
+# Todos dentro do namespace free5gc exceto n3iwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -140,7 +147,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# UDM - Todos dentro do namespace free5gc exceto upf
+# UDM - Unified Data Manager Function
+# Todos dentro do namespace free5gc exceto upf/neiwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -159,7 +167,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# UDR - Todos dentro do namespace free5gc exceto upf
+# UDR - Unified Data Repository
+# Todos dentro do namespace free5gc exceto upf/neiwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -178,7 +187,8 @@ spec:
             namespaces: ["free5gc"]
 ---
 #
-# UPF - Autorizado para smf e n3iwf
+# UPF - User Plane Function
+# Autorizado para smf e n3iwf
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
